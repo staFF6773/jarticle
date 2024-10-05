@@ -17,13 +17,13 @@ public class JarticlePlugin extends JavaPlugin {
 
     /**
      * The instance of the plugin.
-     * Use to access the plugin.
+     * Used to access the plugin.
      */
     @Getter
     private static JarticlePlugin instance;
     /**
      * The feature manager of the plugin.
-     * Use to get access to the features.
+     * Used to get access to the features.
      */
     @Getter
     private final FeatureManager featureManager;
@@ -45,32 +45,35 @@ public class JarticlePlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        Log.info("Loading plugin features...");
         boolean loadedFeatures = featureManager.loadFeatures();
         if (loadedFeatures) {
-            Log.info("✓ Loaded.");
+            Log.info("✓ All features loaded successfully.");
         } else {
-            Log.info("✗ Loaded with errors, the plugin may not work properly.");
+            Log.warning("✗ An error occurred while loading features. Some functionalities may not be available.");
         }
     }
 
     @Override
     public void onEnable() {
+        Log.info("Enabling plugin features...");
         boolean enabledFeatures = featureManager.enableFeatures();
         if (enabledFeatures) {
-            Log.info("✓ Enabled.");
+            Log.info("✓ All features enabled successfully.");
         } else {
-            Log.info("✗ Enabled with errors, the plugin may not work properly, disabling...");
+            Log.severe("✗ An error occurred while enabling features. The plugin will be disabled...");
             getServer().getPluginManager().disablePlugin(this);
         }
     }
 
     @Override
     public void onDisable() {
+        Log.info("Disabling plugin features...");
         boolean disabledFeatures = featureManager.disableFeatures();
         if (disabledFeatures) {
-            Log.info("✓ Disabled.");
+            Log.info("✓ All features disabled successfully.");
         } else {
-            Log.info("✗ Disabled with errors, the plugin may not have been fully disabled.");
+            Log.warning("✗ An error occurred while disabling features. Some resources may not have been released properly.");
         }
     }
 }
